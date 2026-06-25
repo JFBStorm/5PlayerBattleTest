@@ -13,7 +13,8 @@ namespace _5PlayerBattleTest.PlayerClass
 {
     internal class Abilities<T>
     {
-        //This will define all abilites, universal and player specific
+        //This will define all abilites, universal player and enemy specific
+        //These will be imported into multiple List<> from xml files.
         public Abilities()
         {
             
@@ -22,6 +23,7 @@ namespace _5PlayerBattleTest.PlayerClass
          
     }
 
+    //These define the starting abilities.
     internal class InitalAbilites
     {
         List<String> abilityList = new List<String>(8);

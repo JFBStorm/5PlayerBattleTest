@@ -24,55 +24,69 @@ namespace _5PlayerBattleTest
 
             List<EnemyPlayer> enemyPlayers = new List<EnemyPlayer>(5);
             //Initialize values             name,       health, energy, def,    abilityList
-            enemyPlayers.Add(new EnemyPlayer ("Lily",   160,    250,    30,     new InitalAbilites().BasicEnemy()));
+            enemyPlayers.Add(new EnemyPlayer ("Test Enemy",   160,    250,    30,     new InitalAbilites().BasicEnemy()));
 
             //Following code will be put into seperate "battle" c# class
             int enemyCount = 3;
             String num;
-            Boolean valid = false;
+            Boolean valid = false, endTurn = false;
+
             while (enemyCount > 0)
             {
-                foreach (AllyPlayers player in allyPlayers)
+                Boolean playersTurn = true;
+                while (playersTurn)
                 {
-                    Console.WriteLine(player.displayStatsBattle());
-                    Console.WriteLine(player.displayStatsMenu());
-
-                    do
+                    foreach (AllyPlayers player in allyPlayers)
                     {
-                        num = Console.ReadLine();
-                        if (string.IsNullOrWhiteSpace(num))
-                        {
-                            Console.WriteLine("YOU SUCK!");
-                            valid = false;
-                        }
-                        else
-                        {
-                            valid = true;
-                        }
-                    } while (!valid);
-                    
+                        Console.WriteLine("\n" + player.getName() + "'s turn!");
+                        Console.WriteLine("0: Attack");
+                        Console.WriteLine("1: Abilities");
+                        Console.WriteLine("2: Duo");
+                        Console.WriteLine("3: Items");
+                        Console.WriteLine("4: Defend");
 
-                    switch (num)
-                    {
-                        case "0":
-                            Console.WriteLine(player.getName() + " attacks");
-                            break;
-                        case "1":
-                            Console.WriteLine(player.getName() + "'s Abilities");
-                            player.displayEquippedAbilites();
-                            break;
-                        case "2":
-                            Console.WriteLine(player.getName() + " performs duo with Lily");
-                            break;
-                        case "3":
-                            Console.WriteLine(player.getName() + " uses items");
-                            break;
-                        case "4":
-                            Console.WriteLine(player.getName() + " defends");
-                            break;
+                        do
+                        {
+                            num = Console.ReadLine();
+                            if (string.IsNullOrWhiteSpace(num))
+                            {
+                                Console.WriteLine("YOU SUCK!");
+                                valid = false;
+                            }
+                            else
+                            {
+                                valid = true;
+
+                                switch (num)
+                                {
+                                    case "0":
+                                        break;
+                                    case "1":
+                                        Console.WriteLine(player.getName() + "'s Abilities");
+                                        player.displayEquippedAbilites();
+                                        break;
+                                    case "2":
+                                        Console.WriteLine(player.getName() + " performs duo with Lily");
+                                        break;
+                                    case "3":
+                                        Console.WriteLine(player.getName() + " uses items");
+                                        break;
+                                    case "4":
+                                        Console.WriteLine(player.getName() + " defends");
+                                        endTurn = true;
+                                        break;
+                                }
+                            }
+                        } while (!valid && !endTurn);
                     }
-                }
 
+                    //  Execute stored player input
+                    //  This will pass List<> of player actions to a battle class that will execute the actions and return the results to be displayed to the user.
+                    //  Damage will be calculated and applied to the players and enemies.
+                    //  The battle class will also check for any enemy deaths and remove them from list.
+                    playersTurn = endTurn = false;
+                }
+                
                 foreach (EnemyPlayer enemy in enemyPlayers)
                 {
                     //  !NEED TO WRITE AI LOGIC. FOR NOW THIS USES RANDOM ROLLS!
@@ -97,6 +111,16 @@ namespace _5PlayerBattleTest
                     }
                 }
             }
+        }
+
+        public String displayCurrentEnemies(List<EnemyPlayer> enemies)
+        {
+            String enemyList = "";
+            foreach (EnemyPlayer enemy in enemies)
+            {
+                enemyList += enemy.getName() + "\n";
+            }
+            return enemyList;
         }
     }
 }
