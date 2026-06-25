@@ -26,6 +26,10 @@ namespace _5PlayerBattleTest
             //Initialize values             name,       health, energy, def,    abilityList
             enemyPlayers.Add(new EnemyPlayer ("Test Enemy",   160,    250,    30,     new InitalAbilites().BasicEnemy()));
 
+            //  public temp (source, target, action)
+            //  Attacks, abilities, duos, items and defend will all be defined as an ability to simplify system.
+
+
             //Following code will be put into seperate "battle" c# class
             int enemyCount = 3;
             String num;
@@ -55,8 +59,6 @@ namespace _5PlayerBattleTest
                             }
                             else
                             {
-                                valid = true;
-
                                 switch (num)
                                 {
                                     case "0":
@@ -77,7 +79,7 @@ namespace _5PlayerBattleTest
                                         break;
                                 }
                             }
-                        } while (!valid && !endTurn);
+                        } while (!valid);
                     }
 
                     //  Execute stored player input
